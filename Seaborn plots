@@ -1,0 +1,35 @@
+#Plotting histogram to see the distribution of gears in real vehicle data.
+
+import pandas as pd
+df = pd.read_csv("http://media.sundog-soft.com/SelfDriving/FuelEfficiency.csv")
+gear_counts = df['# Gears'].value_counts()
+print(gear_counts)
+gear_counts.plot(kind='bar')
+
+#To display entire data with their columns heads
+df.head()
+
+#For more visually pleasing results, change to the default settings of Seaborn and see the results
+import seaborn as sns
+sns.set()
+sns.countplot(x = "Mfr Name", data = df)
+
+#To plot distplot that is combination of histogram and smooth distribution of data in the form of cuve over it.
+sns.distplot(df['CombMPG'])
+
+#To draw pairplots, It lets us visualize the combinations of pairs of data.
+df2 = df[['Cylinders', 'CityMPG', 'HwyMPG', 'CombMPG']]
+df2.head()
+df3 = df[['CityMPG', 'HwyMPG','CombMPG']]
+df3.head()
+sns.pairplot(df3, height = 2)
+sns.pairplot(df2, height=2.5)
+
+#Scatterplot is to see how the data is scattered/distributed across dimensions
+sns.scatterplot(x="Eng Displ", y="CombMPG", data=df)
+
+#Boxplot let us visualize the data in the form of quartiles
+sns.boxplot(x="Mfr Name", y="CombMPG", data = df)
+
+#Implot is scatter plot with a linear regression live over it.
+sns.lmplot(x="Eng Displ", y="CombMPG", data=df)
